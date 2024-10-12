@@ -1,30 +1,34 @@
 import React, {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import {Recipes} from '../types/recipe';
 
-type Context = {
+type State = {
   state: 'LOAD' | 'OK' | 'KO';
   recipes: Recipes | undefined;
 };
 
-const defaultContext = {
-  state: 'LOAD',
+const defaultState = {
+  state: 'KO',
   recipes: undefined,
 } as const;
 
-const RecipeContext = createContext<Context>(defaultContext);
+const RecipeContext = createContext<
+  {state: State; retry: () => void} | undefined
+>(undefined);
 
 const desiredAllergens = ['Crustaceans', 'Fish', 'Eggs'];
 
 export function RecipeProvider(props: PropsWithChildren) {
-  const [state, setState] = useState<Context>(defaultContext);
+  const [state, setState] = useState<State>(defaultState);
 
-  useEffect(() => {
+  const getData = useCallback(() => {
     fetch('https://www.simplycook.com/api/recipes')
       .then(r => r.json())
       .then((json: Recipes) =>
@@ -43,8 +47,12 @@ export function RecipeProvider(props: PropsWithChildren) {
       .catch(() => setState(s => ({...s, state: 'KO'})));
   }, []);
 
+  useEffect(getData, [getData]);
+
+  const value = useMemo(() => ({state, retry: getData}), [getData, state]);
+
   return (
-    <RecipeContext.Provider value={state}>
+    <RecipeContext.Provider value={value}>
       {props.children}
     </RecipeContext.Provider>
   );
