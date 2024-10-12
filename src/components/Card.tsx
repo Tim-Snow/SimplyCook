@@ -20,8 +20,8 @@ type FrontProps = {
 
 type BackProps = {
   time: string;
-  rating: number;
-  reviewText: string;
+  rating: string;
+  topReview?: string;
   chilli: number;
 };
 
@@ -29,8 +29,8 @@ export function Card({image, front, back}: Props) {
   const [display, setDisplay] = useState<'front' | 'back'>('front');
 
   const flip = useCallback(
-    () => setDisplay(display === 'front' ? 'back' : 'front'),
-    [display],
+    () => setDisplay(p => (p === 'front' ? 'back' : 'front')),
+    [],
   );
 
   return (
@@ -52,21 +52,23 @@ function Front({name, desc}: FrontProps) {
   );
 }
 
-function Back({time, rating, reviewText, chilli}: BackProps) {
+function Back({time, rating, topReview, chilli}: BackProps) {
   return (
     <>
-      <Text>{time}</Text>
-      <Text>{rating}</Text>
-      <Text>{reviewText}</Text>
-      <Text>{chilli}</Text>
+      <Text>🕔 {time} mins</Text>
+      <Text style={styles.ratingText}>⭐️ {rating}/5</Text>
+      {topReview && <Text>📖 {topReview}</Text>}
+      <Text>🌶️ {heat[chilli]}</Text>
     </>
   );
 }
 
+const heat = ['Not spicy', 'Mild', 'Medium', 'Hot'];
+
 const styles = StyleSheet.create({
   container: {
     width: 200,
-    height: 220,
+    minHeight: 220,
     padding: 12,
   },
   image: {
@@ -77,5 +79,8 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontWeight: 'bold',
+  },
+  ratingText: {
+    color: 'orange',
   },
 });
