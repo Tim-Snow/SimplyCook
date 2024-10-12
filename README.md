@@ -1,3 +1,15 @@
+# Demo
+
+Demonstrating functionality:
+
+![demo](https://github.com/user-attachments/assets/2fa5e110-374d-4ab4-9e75-d6fe6873e228)
+
+Demonstrating network error retry:
+
+![ko](https://github.com/user-attachments/assets/36bd6594-cc7e-4cd8-b101-a2d87648a4ad)
+
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
