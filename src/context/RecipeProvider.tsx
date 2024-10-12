@@ -15,7 +15,7 @@ type State = {
 };
 
 const defaultState = {
-  state: 'KO',
+  state: 'LOAD',
   recipes: undefined,
 } as const;
 

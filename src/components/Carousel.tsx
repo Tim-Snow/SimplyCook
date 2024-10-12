@@ -64,10 +64,11 @@ const styles = StyleSheet.create({
   },
   button: {
     justifyContent: 'center',
+    alignItems: 'center',
     width: 90,
     height: 52,
     borderRadius: 10,
-    backgroundColor: '#7777AA',
+    backgroundColor: '#33b249',
     padding: 12,
     margin: 12,
   },

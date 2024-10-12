@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 
 type Props = {
@@ -44,10 +45,9 @@ export function Card({image, front, back}: Props) {
 function Front({name, desc}: FrontProps) {
   return (
     <>
-      <Text numberOfLines={2} style={styles.titleText}>
-        {name}
-      </Text>
-      <Text numberOfLines={2}>{desc}</Text>
+      <Text style={styles.titleText}>{name}</Text>
+      <Spacer />
+      <Text>{desc}</Text>
     </>
   );
 }
@@ -56,11 +56,18 @@ function Back({time, rating, topReview, chilli}: BackProps) {
   return (
     <>
       <Text>🕔 {time} mins</Text>
+      <Spacer />
       <Text style={styles.ratingText}>⭐️ {rating}/5</Text>
+      <Spacer />
       {topReview && <Text>📖 {topReview}</Text>}
+      <Spacer />
       <Text>🌶️ {heat[chilli]}</Text>
     </>
   );
+}
+
+function Spacer() {
+  return <View style={styles.spacer} />;
 }
 
 const heat = ['Not spicy', 'Mild', 'Medium', 'Hot'];
@@ -82,5 +89,8 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     color: 'orange',
+  },
+  spacer: {
+    height: 4,
   },
 });
